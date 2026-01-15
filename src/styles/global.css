@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+    --color-brand-blue: #0395d3;
+    /* Vibrant Electric Blue */
+    --color-brand-dark: #0f172a;
+    /* Slate 900 */
+    --font-sans: "Inter", sans-serif;
+
+    --animate-scroll: scroll 30s linear infinite;
+
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+@utility no-scrollbar {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Custom base styles if needed */
+body {
+    font-family: var(--font-sans);
+    color: #01577c;
+    /* Slate 700 - Better readability */
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 120px;
+    right: 20px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    transform: scale(1.1);
+}
+
+/* Floating Phone Button */
+.phone-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 20px;
+    background-color: #0395d3;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.phone-float:hover {
+    background-color: #027eb3;
+    transform: scale(1.1);
+}

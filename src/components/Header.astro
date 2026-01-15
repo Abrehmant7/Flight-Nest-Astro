@@ -1,0 +1,73 @@
+---
+const heroImage = "../public/images/heroImage.avif";
+const heroImageError = "https://placehold.co/1920x800?text=Travel+Hero";
+const optionList = [
+  { value: "visas", label: "Visas" },
+  { value: "flights", label: "Flights" },
+  { value: "hotels", label: "Hotels" },
+  { value: "packages", label: "Packages" },
+];
+---
+
+<!-- Hero Section -->
+<header
+  class="relative w-full h-125 md:h-150 overflow-hidden flex items-center justify-center text-white"
+>
+  <div class="absolute inset-0 z-0">
+    <!-- Default Fallback Image -->
+    <img
+      id="hero-bg"
+      src={heroImage}
+      onerror={`this.src='${heroImageError}'; this.onerror=null;`}
+      alt="Background"
+      class="w-full h-full object-cover brightness-75 transition-opacity duration-1000"
+    />
+  </div>
+
+  <div class="relative z-10 text-center w-full max-w-5xl px-4">
+    <h1 class="text-4xl md:text-6xl font-bold mb-12 drop-shadow-lg">
+      Book Your Perfect Destinations
+    </h1>
+
+    <div
+      class="bg-white rounded-3xl md:rounded-full p-2 shadow-2xl flex flex-col md:flex-row items-center max-w-2xl mx-auto border border-gray-100 transition-all"
+    >
+      <div class="flex-1 w-full px-6 py-2 relative">
+        <select
+          id="hero-service-select"
+          class="w-full bg-transparent font-bold text-gray-600 text-lg outline-none appearance-none cursor-pointer h-full py-2"
+        >
+          <option disabled selected value="">Select Services</option>
+          {
+            optionList.map((option) => {
+              return <option value={option.value}>{option.label}</option>;
+            })
+          }
+        </select>
+        <div
+          class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-brand-dark"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+      <button
+        id="hero-dropdown-btn"
+        class="w-full md:w-auto bg-brand-blue hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-2xl md:rounded-full transition shadow-lg hover:shadow-brand-blue/30 whitespace-nowrap text-lg mt-2 md:mt-0"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</header>

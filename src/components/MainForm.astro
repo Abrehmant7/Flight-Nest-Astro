@@ -1,0 +1,153 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+const tabs = [
+  {
+    id: "hotels",
+    label: "Hotels",
+    icon: "fas fa-hotel",
+  },
+  {
+    id: "holiday-packages",
+    label: "Holiday Packages",
+    icon: "fas fa-box",
+  },
+  {
+    id: "flights",
+    label: "Flights",
+    icon: "fas fa-plane",
+  },
+  {
+    id: "trips",
+    label: "Trips",
+    icon: "fas fa-mountain",
+  },
+  {
+    id: "activities",
+    label: "Activities",
+    icon: "fas fa-running",
+  },
+];
+
+type Field = {
+  id: string;
+  label: string;
+  placeholder: string;
+  type: HTMLAttributes<"input">["type"];
+};
+
+const fields: Field[] = [
+  {
+    id: "departure-place",
+    label: "Departure Place",
+    placeholder: "Departure",
+    type: "text",
+  },
+  {
+    id: "departure-date",
+    label: "Departure Date",
+    placeholder: "Departure Date",
+    type: "date",
+  },
+  {
+    id: "return-date",
+    label: "Return Date",
+    placeholder: "Return Date",
+    type: "date",
+  },
+  {
+    id: "full-name",
+    label: "Full Name",
+    placeholder: "Enter Your Name",
+    type: "text",
+  },
+  {
+    id: "email",
+    label: "Email",
+    placeholder: "Enter Your Email",
+    type: "email",
+  },
+  {
+    id: "destination",
+    label: "Destination",
+    placeholder: "Enter Your Destination",
+    type: "text",
+  },
+  {
+    id: "phone-number",
+    label: "Phone Number",
+    placeholder: "Enter Phone Number",
+    type: "tel",
+  },
+  {
+    id: "nationality",
+    label: "Nationality",
+    placeholder: "Enter Nationality",
+    type: "text",
+  },
+  {
+    id: "current-country-of-stay",
+    label: "Current Country of Stay",
+    placeholder: "Enter Current Country of Stay",
+    type: "text",
+  },
+];
+---
+
+<!-- Booking Form Section -->
+<section class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4 relative mt-6 md:-mt-24 z-20">
+    <div
+      class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-6xl mx-auto border border-gray-100"
+    >
+      <!-- Tabs -->
+      <!-- Mobile Heading -->
+      <div class="md:hidden p-6 border-b border-gray-100">
+        <h2 class="text-2xl font-bold text-center text-brand-dark">
+          Book with us
+        </h2>
+      </div>
+      <!-- Tabs -->
+      <div class="hidden md:flex flex-wrap border-b border-gray-100">
+        {
+          tabs.map((tab) => (
+            <button class="flex-1 py-5 px-6 text-center font-bold text-brand-blue border-b-2 border-brand-blue bg-blue-50/50 flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-300 hover:bg-gray-100">
+              <i class={tab.icon} /> {tab.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <!-- Form -->
+      <div class="p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- form fields -->
+          {
+            fields.map((field) => (
+              <div class="flex flex-col gap-2 group">
+                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider group-focus-within:text-brand-blue transition-colors">
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  class="w-full bg-gray-50 border-b-[2px] border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-blue focus:bg-white focus:shadow-md transition-all duration-300 text-sm font-medium"
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-10">
+          <button
+            id="hero-search-btn"
+            class="w-full bg-gradient-to-r from-brand-blue to-blue-500 hover:from-blue-700 hover:to-brand-blue text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.01] text-lg tracking-wide uppercase"
+          >
+            Apply Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
