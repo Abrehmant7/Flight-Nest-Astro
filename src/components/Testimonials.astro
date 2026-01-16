@@ -1,0 +1,76 @@
+---
+const testimonials = [
+  {
+    name: "Adetola",
+    rating: 5,
+    review:
+      "I can confidently say that I highly recommend this travel agency as one of the best and most reliable. They are professional, trustworthy, and consistently deliver successful results.” Thanks to Michael brown who handled my case ..",
+  },
+  {
+    name: "Shayan Akhtar",
+    rating: 5,
+    review:
+      "the best guys for the job it was best… the best guys for the job it was best decision to make my process through yhese guys micheal who was really helpfull till the end i would really apreciate what these guys are upto and would definitely recommend.",
+  },
+  {
+    name: "Emilia",
+    rating: 5,
+    review:
+      "Hiya, thank you for helping me get machine gave Visa. I recommend it to anyone needs a Shanghai Visa go to this flightiest.uk",
+  },
+];
+---
+
+<!-- Testimonials -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-6">
+    <h2
+      class="text-2xl md:text-3xl font-extrabold text-brand-dark mb-12 text-center"
+    >
+      Client's Testimonials <span
+        class="text-xs font-normal text-gray-500 block mt-2"
+        >Rated Excellent on <span class="text-[#00b67a] font-bold"
+          >Trustpilot</span
+        ></span
+      >
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="reviews-container">
+      <!-- Review 1: Adetola -->
+      {
+        testimonials.map((testimonial) => (
+          <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full mb-4 bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold text-2xl">
+              {testimonial.name.charAt(0)}
+            </div>
+            <a
+              href="https://www.trustpilot.com/review/flightnest.uk"
+              target="_blank"
+              class="font-bold text-lg text-brand-dark hover:text-brand-blue transition-colors"
+            >
+              {testimonial.name}
+            </a>
+            <div class="flex gap-1 text-brand-blue mb-4 text-sm">
+              {Array.from({ length: testimonial.rating }).map(() => (
+                <i class="ri-star-fill" />
+              ))}
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed italic">
+              "{testimonial.review}"
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="https://www.trustpilot.com/review/flightnest.uk"
+        target="_blank"
+        class="bg-brand-blue hover:bg-sky-500 text-white font-bold py-3 px-8 rounded-full transition shadow-md inline-block"
+      >
+        VIEW MORE ON TRUSTPILOT
+      </a>
+    </div>
+  </div>
+</section>

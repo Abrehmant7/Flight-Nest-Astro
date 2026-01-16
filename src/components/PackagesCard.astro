@@ -1,0 +1,40 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+}
+
+const { title, description, icon, color } = Astro.props as Props;
+---
+
+<div
+    class={`${color == "blue" ? "bg-blue-100" : "bg-[#fcd45063]"} rounded-3xl p-6 relative overflow-hidden group hover:shadow-lg transition-all duration-300 border border-blue-100/50`}
+>
+    <div class="relative z-10">
+        <h3
+            class="font-bold text-gray-800 text-lg mb-1 group-hover:text-brand-blue transition-colors"
+        >
+            {title}
+        </h3>
+        <p class="text-brand-blue/70 text-sm font-medium">
+            {description}
+        </p>
+    </div>
+    <div
+        class="absolute bottom-2 right-2 opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-300 text-brand-blue"
+    >
+        <svg
+            class="w-16 h-16"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d={icon}></path></svg
+        >
+    </div>
+</div>

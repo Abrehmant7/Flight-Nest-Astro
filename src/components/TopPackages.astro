@@ -1,0 +1,148 @@
+---
+import { Image } from "astro:assets";
+import PackagesCard from "./PackagesCard.astro";
+import france from "../assets/images/france.jpg";
+import greece from "../assets/images/greece.jpg";
+import switzerland from "../assets/images/switzerland.jpg";
+---
+
+<!-- Top Packages -->
+<section id="top-packages" class="py-8 md:py-12 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <!-- Heading -->
+        <h2
+            class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-6 text-center"
+        >
+            Top Packages
+        </h2>
+
+        <!-- Info Cards Grid -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8"
+        >
+            <!-- Card 1: Visa Services (Pink) -->
+            <PackagesCard
+                title="Online visa services"
+                description="all over Europe"
+                icon="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                color="pink"
+            />
+            <PackagesCard
+                title="Support Promotions"
+                description="travel budget"
+                icon="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                color="blue"
+            />
+            <PackagesCard
+                title="We plan unforgettable"
+                description="family tours"
+                icon="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                color="pink"
+            />
+            <PackagesCard
+                title="Flight Tickets"
+                description="affordable price"
+                icon="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                color="blue"
+            />
+        </div>
+
+        <!-- Featured Deal Card (Rotates: France, Greece, Switzerland) -->
+        <div
+            class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col md:flex-row group hover:shadow-2xl transition-all duration-500"
+        >
+            <!-- Text Content -->
+            <div
+                class="p-8 md:p-12 w-full md:w-3/6 flex flex-col justify-center items-start relative overflow-hidden"
+            >
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-medium text-gray-600 mb-1">
+                        Planned Trip for
+                    </h3>
+                    <h2
+                        id="deal-country"
+                        class="text-4xl md:text-6xl font-black text-brand-blue mb-4 tracking-tight transition-opacity duration-500"
+                    >
+                        France
+                    </h2>
+                    <div class="flex items-baseline gap-2 mb-8">
+                        <span
+                            id="deal-price"
+                            class="text-2xl md:text-3xl text-[#f7c82f] font-bold transition-opacity duration-500"
+                            >Limited Time Offer</span
+                        >
+                    </div>
+                    <button
+                        class="bg-brand-blue text-white px-10 py-4 rounded-2xl font-bold hover:bg-sky-500 transition shadow-lg hover:shadow-brand-blue/30 text-lg transform duration-300"
+                    >
+                        View Offer
+                    </button>
+                </div>
+                <!-- Decorative bg circle -->
+                <div
+                    class="absolute -top-10 -left-10 w-40 h-40 bg-blue-50 rounded-full z-0 opacity-50"
+                >
+                </div>
+            </div>
+            <!-- Image -->
+            <div
+                class="w-full md:w-3/5 min-h-50 md:min-h-auto relative overflow-hidden"
+            >
+                <Image
+                    id="deal-image"
+                    src={france}
+                    alt="Travel Destination"
+                    class="w-full h-full object-cover transition-all duration-700"
+                />
+                <div
+                    class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"
+                >
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script define:vars={{ france, greece, switzerland }}>
+    const deals = [
+        {
+            country: "France",
+            price: "Limited Time offer",
+            image: france.src,
+        },
+        {
+            country: "Greece",
+            price: "Limited Time offer",
+            image: greece.src,
+        },
+        {
+            country: "Switzerland",
+            price: "Limited Time offer",
+            image: switzerland.src,
+        },
+    ];
+
+    let currentIndex = 0;
+
+    const countryEl = document.getElementById("deal-country");
+    const priceEl = document.getElementById("deal-price");
+    const imageEl = document.getElementById("deal-image");
+
+    if (countryEl && priceEl && imageEl) {
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % deals.length;
+            const deal = deals[currentIndex];
+
+            // Optional: Add a fade effect manually if simple swap isn't enough,
+            // but for now, we just swap the content.
+            // A simple CSS transition on the element handles opacity if classes are toggled,
+            // but here we just update text/src. The image has a transition class,
+            // so it might fade if the browser supports src transitions (rare) or just cut.
+            // For a better effect, we could toggle opacity classes, but let's stick to the request: "automatically change".
+
+            countryEl.textContent = deal.country;
+            priceEl.textContent = deal.price;
+            imageEl.src = deal.image;
+        }, 3000);
+    }
+</script>

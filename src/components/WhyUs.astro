@@ -1,0 +1,58 @@
+---
+const reasons = [
+   {
+      title: "Refund or Change",
+      description:
+         "We are here to make your experience incredible. Reach us by phone, email, or WhatsApp.",
+   },
+   {
+      title: "Lowest Prices",
+      description:
+         "With over 100+ direct contracts with the airlines & suppliers, FlightNest can save you more!",
+   },
+   {
+      title: "Faster Access",
+      description:
+         "Get instant itinerary on your email when you make your booking through FlightNest.",
+   },
+];
+---
+
+<section class="py-16 bg-white">
+   <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-brand-dark mb-12">
+         Why Book with us!
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+         {
+            reasons.map((reason) => (
+               <div class="flex flex-col items-center">
+                  <div class="mb-6 text-brand-dark p-4 bg-blue-50 rounded-full">
+                     <svg
+                        class="w-12 h-12 text-brand-blue"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                     >
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="1.5"
+                           d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                        />
+                     </svg>
+                  </div>
+                  <h3 class="font-bold text-xl text-brand-dark mb-3">
+                     {reason.title}
+                  </h3>
+                  <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+                     {reason.description}
+                  </p>
+               </div>
+            ))
+         }
+      </div>
+   </div>
+</section>
