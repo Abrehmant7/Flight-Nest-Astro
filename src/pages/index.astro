@@ -11,10 +11,65 @@ import WhyUs from "../components/WhyUs.astro";
 
 <Layout pageName="Home">
 	<Hero />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<MainForm />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<TrendingVisas />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<TopPackages />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<TopDestinations />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<Testimonials />
+
+	<div class="container mx-auto px-6">
+		<div class="section-separator h-[2px] bg-gray-800 w-0 mx-auto"></div>
+	</div>
+
 	<WhyUs />
 </Layout>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const separators = document.querySelectorAll(".section-separator");
+
+		separators.forEach((sep) => {
+			gsap.to(sep, {
+				width: "100%",
+				duration: 1.5,
+				ease: "power2.out",
+				scrollTrigger: {
+					trigger: sep,
+					start: "top 80%", // Animate when line enters viewport
+					end: "bottom 20%",
+					toggleActions: "play none none reverse", // Play on enter, reverse on leave back up
+				},
+			});
+		});
+	});
+</script>

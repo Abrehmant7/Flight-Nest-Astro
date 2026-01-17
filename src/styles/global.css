@@ -18,6 +18,11 @@
             transform: translateX(-100%);
         }
     }
+
+}
+
+@utility text-stroke-white {
+    -webkit-text-stroke: 1px white;
 }
 
 @utility no-scrollbar {
@@ -49,7 +54,7 @@ body {
     text-align: center;
     font-size: 30px;
     box-shadow: 2px 2px 3px #999;
-    z-index: 1000;
+    z-index: 59;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,7 +79,7 @@ body {
     text-align: center;
     font-size: 30px;
     box-shadow: 2px 2px 3px #999;
-    z-index: 1000;
+    z-index: 59;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,4 +89,27 @@ body {
 .phone-float:hover {
     background-color: #027eb3;
     transform: scale(1.1);
+}
+
+/* Navigation & Animation Styles */
+
+/* Ensure menu overlay behaves as a flex container when visible */
+#menu-overlay-div {
+    display: none;
+    /* Controlled by JS/Tailwind 'hidden' class toggling */
+    width: 100%;
+    height: 100%;
+}
+
+#menu-overlay-div.flex {
+    display: flex;
+}
+
+/* Custom Cursor Clean up if needed */
+.cross-btn {
+    cursor: pointer;
+}
+
+#menu-btn {
+    cursor: pointer;
 }

@@ -8,27 +8,19 @@ interface Props {
 
 const { pageName } = Astro.props as Props;
 
-interface NavLink {
-    href: string;
-    label: string;
-}
-
-const navLinks: NavLink[] = [
+const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/schengen-countries", label: "Schengen Countries" },
-    { href: "/premium-countries", label: "Premium countries" },
-    { href: "/about-us", label: "About Us" },
-    { href: "/FAQ", label: "FAQs" },
-    { href: "/blog", label: "Blog" },
-    { href: "/refund-policy", label: "Refund Policy" },
+    { href: "/about", label: "About" },
+    { href: "/services", label: "Services" },
+    { href: "/tours", label: "Tours" },
 ];
 ---
 
-<!-- Navbar -->
 <nav
-    class="bg-white py-2 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 shadow-sm"
+    class="fixed top-0 w-full z-[50] flex justify-between items-center py-4 px-6 md:px-12 pointer-events-none text-white"
 >
-    <div class="flex items-center gap-2">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 pointer-events-auto">
         <a href="/">
             <Image
                 class="w-16 h-16 rounded-full mix-blend-multiply"
@@ -38,40 +30,101 @@ const navLinks: NavLink[] = [
         </a>
     </div>
 
+    <!-- Right Actions -->
     <div
-        class="hidden md:flex flex-1 justify-center items-center gap-6 text-sm font-medium text-gray-600"
+        class="flex items-center gap-4 pointer-events-auto mix-blend-difference"
     >
-        {
-            navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    class={`hover:text-brand-blue transition ${pageName === link.label ? "text-brand-blue" : ""}`}
-                >
-                    {link.label}
-                </a>
-            ))
-        }
+        <a
+            href="/contact"
+            class={`hidden md:block px-6 py-2 border border-white/20 rounded-full hover:bg-brand-dark transition-colors uppercase text-sm tracking-widest ${pageName === "Home" ? "bg-white text-brand-dark hover:bg-brand-dark hover:text-white" : "bg-brand-blue text-white hover:bg-brand-dark "}`}
+        >
+            Contact
+        </a>
+        <button
+            id="menu-btn"
+            class={`px-6 py-2  rounded-full uppercase text-sm  hover:text-white tracking-widest hover:bg-opacity-80 transition-colors ${pageName === "Home" ? "bg-white text-brand-dark hover:bg-brand-dark hover:text-white" : "bg-brand-blue text-white hover:bg-brand-dark"}`}
+        >
+            Menu
+        </button>
+    </div>
+</nav>
+
+<!-- Loader Overlays -->
+<div class="loader-container fixed inset-0 z-[60] pointer-events-none flex">
+    <div class="loader-div w-1/4 h-full bg-brand-dark" id="div1"></div>
+    <div class="loader-div w-1/4 h-full bg-brand-dark" id="div2"></div>
+    <div class="loader-div w-1/4 h-full bg-brand-dark" id="div3"></div>
+    <div class="loader-div w-1/4 h-full bg-brand-dark" id="div4"></div>
+</div>
+
+<!-- Menu Overlays -->
+<div
+    id="menu-overlay-div"
+    class="fixed inset-0 z-[55] pointer-events-none hidden"
+>
+    <!-- Close Button -->
+    <button
+        class="cross-btn absolute top-6 right-8 z-[70] text-white text-4xl opacity-0 pointer-events-auto hover:text-gray-300 transition-colors"
+    >
+        &times;
+    </button>
+
+    <div class="menu-overlay w-1/4 h-full bg-brand-dark" id="menu-overlay1">
+    </div>
+    <div class="menu-overlay w-1/4 h-full bg-brand-dark" id="menu-overlay2">
+    </div>
+    <div class="menu-overlay w-1/4 h-full bg-brand-dark" id="menu-overlay3">
+    </div>
+    <div class="menu-overlay w-1/4 h-full bg-brand-dark" id="menu-overlay4">
     </div>
 
-    <button
-        class="hidden md:block bg-brand-blue text-white px-6 py-3 rounded-2xl hover:bg-sky-500 transition"
+    <!-- Menu Content -->
+    <div
+        class="menu-content absolute inset-0 flex flex-col items-center justify-center z-[60] pointer-events-auto opacity-0"
     >
-        <a href="/contact" class="transition">Contact us</a>
-    </button>
-
-    <button class="md:hidden text-gray-600 focus:outline-none">
-        <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-    </button>
-</nav>
-<!-- nav end -->
+        <div class="flex flex-col gap-4 text-center">
+            <a
+                href="/"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                Home
+            </a>
+            <a
+                href="/schengen-countries"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                Schengen Countries
+            </a>
+            <a
+                href="/premium-countries"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                Premium Countries
+            </a>
+            <a
+                href="/blog"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                Blog
+            </a>
+            <a
+                href="/about-us"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                About Us
+            </a>
+            <a
+                href="/FAQ"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                FAQs
+            </a>
+            <a
+                href="/refund-policy"
+                class="menu-link opacity-0 translate-y-12 text-4xl md:text-6xl font-bold text-white hover:text-transparent hover:text-stroke-white transition-all duration-300 leading-tight"
+            >
+                Refund Policy
+            </a>
+        </div>
+    </div>
+</div>

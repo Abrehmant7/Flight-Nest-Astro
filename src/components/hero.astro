@@ -77,10 +77,12 @@ const slides = [
   let slides: HTMLElement[] = [];
   let totalSlides = 0;
   let ctx;
+  let slideInterval;
 
   // Configuration
   const DURATION = 1.2;
   const EASE = "power3.inOut";
+  const AUTO_SLIDE_INTERVAL = 3000;
 
   function init() {
     const container = document.getElementById('hero-container');
@@ -102,6 +104,22 @@ const slides = [
         const activeText = getSlideElements(slides[0]);
         animateTextIn(activeText, 0);
     }, container);
+
+    startTimer();
+  }
+
+  function startTimer() {
+    stopTimer();
+    slideInterval = setInterval(nextSlide, AUTO_SLIDE_INTERVAL);
+  }
+
+  function stopTimer() {
+    if (slideInterval) clearInterval(slideInterval);
+  }
+
+  function handleManualNext() {
+    nextSlide();
+    startTimer(); // Reset timer on manual interaction
   }
 
   function getSlideElements(slide) {
@@ -200,11 +218,11 @@ function nextSlide() {
 
   // Event Listeners
   const container = document.getElementById('hero-container');
-  container?.addEventListener('click', nextSlide);
+  container?.addEventListener('click', handleManualNext);
   
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === ' ') {
-      nextSlide();
+      handleManualNext();
     }
   });
 
@@ -215,10 +233,11 @@ function nextSlide() {
   }, { passive: true });
   
   container?.addEventListener('touchend', (e) => {
-    if (touchStartX - e.changedTouches[0].screenX > 50) nextSlide();
+    if (touchStartX - e.changedTouches[0].screenX > 50) handleManualNext();
   }, { passive: true });
 
   window.addEventListener('beforeunload', () => {
   ctx?.revert();
+  stopTimer();
 });
 </script>
