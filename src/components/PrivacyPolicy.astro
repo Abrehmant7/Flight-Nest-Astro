@@ -1,0 +1,317 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const definitions = [
+    {
+        term: "Account:",
+        definition:
+            "A unique user profile established to facilitate access to our services",
+    },
+    {
+        term: "Company:",
+        definition:
+            "FlightNest, the data controller for the purposes of this policy",
+    },
+    {
+        term: "Cookies:",
+        definition:
+            "Small data files stored on your computing device that retain browsing preferences and activity",
+    },
+    {
+        term: "Country:",
+        definition: "The United Kingdom, our primary jurisdiction of operation",
+    },
+    {
+        term: "Device:",
+        definition:
+            "Any internet-capable equipment including smartphones, tablets, computers, or similar technology",
+    },
+    {
+        term: "Personal Data:",
+        definition:
+            "Any information relating to an identified or identifiable natural person",
+    },
+    {
+        term: "Service:",
+        definition:
+            "Our comprehensive visa consultation and application assistance services",
+    },
+    {
+        term: "Service Provider:",
+        definition:
+            "Third-party organizations that process data on our behalf under contractual arrangements",
+    },
+    {
+        term: "Usage Data:",
+        definition:
+            "Information automatically collected regarding your interaction with our services",
+    },
+    {
+        term: "Website:",
+        definition:
+            "Our online platform accessible at https://flightnest.co.uk",
+    },
+    {
+        term: "You/Your:",
+        definition:
+            "The individual user or the legal entity you represent when using our services",
+    },
+];
+
+const primaryData = [
+    "Complete legal name as appears on official documentation",
+    "Primary and alternative email addresses",
+    "Contact telephone numbers",
+    "Passport and other government-issued identification details",
+    "Nationality, citizenship status, and international travel history",
+    "Financial and billing information for payment processing",
+];
+
+const cookies = [
+    {
+        type: "Strictly Necessary Cookies:",
+        desc: "Enable fundamental website operations and secure authentication processes",
+    },
+    {
+        type: "Functional Cookies:",
+        desc: "Preserve user preferences and customization settings",
+    },
+    {
+        type: "Performance Cookies:",
+        desc: "Generate analytics data to assess website usage patterns and optimize performance",
+    },
+    {
+        type: "Targeting Cookies:",
+        desc: "(where applicable) Monitor user engagement for marketing and advertising optimization",
+    },
+];
+
+const lawfulBasis = [
+    "Facilitating visa application preparation and submission procedures",
+    "Maintaining communication regarding service requests and updates",
+    "Processing payments and generating financial documentation",
+    "Enhancing website functionality and service quality",
+    "Ensuring compliance with legal and regulatory requirements",
+    "Implementing fraud prevention and security measures",
+    "Providing customer support and resolving inquiries",
+];
+
+const userRights = [
+    "Right to access and obtain copies of your data",
+    "Right to rectify inaccurate or incomplete information",
+    "Right to erasure under certain circumstances",
+    "Right to restrict processing",
+    "Right to data portability",
+    "Right to object to processing",
+];
+---
+
+<!-- PRIVACY POLICY -->
+<section id="privacy-policy" class="pt-12 border-t-2 border-gray-200">
+    <h1
+        class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-8 border-b-4 border-brand-blue pb-4 inline-block"
+    >
+        Privacy Policy
+    </h1>
+
+    <p class="text-gray-600 mb-4">
+        <strong>Effective Date:</strong> January 14, 2026
+    </p>
+
+    <h2
+        class="text-2xl font-bold text-gray-800 mb-4 mt-8 pb-2 border-b border-gray-200"
+    >
+        Introduction
+    </h2>
+    <p class="text-gray-600 mb-4 leading-relaxed">
+        This Privacy Policy governs how FlightNest ("we," "us," or "our")
+        collects, processes, utilizes, and protects your personal information
+        when you access our website or engage our visa consultation services.
+        This policy also outlines your data protection rights and describes our
+        compliance with applicable privacy legislation.
+    </p>
+    <p class="text-gray-600 mb-8 leading-relaxed">
+        By accessing our services, you acknowledge and consent to the
+        information practices described in this policy.
+    </p>
+
+    <!-- 1. Interpretation and Definitions -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        1. Interpretation and Definitions
+    </h2>
+    <h3 class="font-bold text-gray-700 mb-2">Interpretation</h3>
+    <p class="text-gray-600 mb-4 text-sm">
+        Capitalized terms used throughout this policy have specific meanings as
+        defined below. These definitions apply regardless of whether the terms
+        appear in singular or plural form.
+    </p>
+    <h3 class="font-bold text-gray-700 mb-2">Definitions</h3>
+    <ul
+        class="list-disc list-outside ml-6 space-y-2 text-gray-600 text-sm mb-8"
+    >
+        {
+            definitions.map((def) => (
+                <li>
+                    <strong>{def.term}</strong> {def.definition}
+                </li>
+            ))
+        }
+    </ul>
+
+    <!-- 2. Categories of Personal Data Collected -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        2. Categories of Personal Data Collected
+    </h2>
+    <h3 class="font-bold text-gray-700 mb-2">Primary Personal Information</h3>
+    <ul
+        class="list-disc list-outside ml-6 space-y-2 text-gray-600 text-sm mb-4"
+    >
+        {primaryData.map((data) => <li>{data}</li>)}
+    </ul>
+    <h3 class="font-bold text-gray-700 mb-2">Usage and Technical Data</h3>
+    <p class="text-gray-600 text-sm mb-8">
+        Usage Data is automatically generated during your interaction with our
+        services. This encompasses your device's Internet Protocol (IP) address,
+        browser type and version, pages accessed, session duration, unique
+        device identifiers, and additional diagnostic information. For mobile
+        device users, we may additionally collect device model specifications,
+        operating system version, mobile browser type, and unique device
+        identifiers for service optimization purposes.
+    </p>
+
+    <!-- 3. Tracking Technologies -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        3. Tracking Technologies and Cookie Implementation
+    </h2>
+    <p class="text-gray-600 text-sm mb-4">
+        We employ cookies and similar tracking mechanisms to enhance user
+        experience, analyze service utilization, and optimize website
+        functionality.
+    </p>
+    <h3 class="font-bold text-gray-700 mb-2">Cookie Classifications</h3>
+    <ul
+        class="list-disc list-outside ml-6 space-y-2 text-gray-600 text-sm mb-4"
+    >
+        {
+            cookies.map((cookie) => (
+                <li>
+                    <strong>{cookie.type}</strong> {cookie.desc}
+                </li>
+            ))
+        }
+    </ul>
+    <p class="text-gray-600 text-sm mb-8">
+        Users may configure browser settings to decline cookies; however, this
+        may limit certain website functionalities.
+    </p>
+
+    <!-- 4. Lawful Basis -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        4. Lawful Basis and Purposes for Data Processing
+    </h2>
+    <p class="text-gray-600 text-sm mb-4">
+        We process your personal data for the following purposes:
+    </p>
+    <ul
+        class="list-disc list-outside ml-6 space-y-2 text-gray-600 text-sm mb-8"
+    >
+        {lawfulBasis.map((purpose) => <li>{purpose}</li>)}
+    </ul>
+
+    <!-- 5. Data Sharing -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        5. Data Sharing and International Transfers
+    </h2>
+    <div class="space-y-4 text-sm text-gray-600 mb-8">
+        <p>
+            <strong class="text-gray-800">Third-Party Processing:</strong> Your information
+            may be processed at FlightNest facilities or by authorized partners globally.
+            Data transfers outside your jurisdiction are conducted with appropriate
+            safeguards and security protocols.
+        </p>
+        <p>
+            <strong class="text-gray-800">Corporate Transactions:</strong> In the
+            event of merger, acquisition, or asset transfer, your Personal Data may
+            be transferred to the acquiring entity. We will provide advance notification
+            before your data becomes subject to alternative privacy policies.
+        </p>
+        <p>
+            <strong class="text-gray-800">Legal Disclosure:</strong> We may disclose
+            personal information when legally required or when necessary to protect
+            our rights, property, or user safety, or to comply with judicial proceedings,
+            court orders, or legal processes.
+        </p>
+    </div>
+
+    <!-- 6. Data Security -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        6. Data Security Measures
+    </h2>
+    <p class="text-gray-600 text-sm mb-8">
+        We implement industry-standard security protocols to protect your
+        personal information. However, no method of electronic transmission or
+        storage can guarantee absolute security, and we cannot ensure complete
+        protection against all potential security breaches.
+    </p>
+
+    <!-- 7. Minors -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        7. Protection of Minor's Privacy
+    </h2>
+    <p class="text-gray-600 text-sm mb-8">
+        Our services are not designed for or directed toward individuals under
+        the age of 13. We do not knowingly collect personal information from
+        children. If we become aware of such collection, we will promptly delete
+        the information and terminate the associated account.
+    </p>
+
+    <!-- 8. Data Retention -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        8. Data Retention and Your Rights
+    </h2>
+    <p class="text-gray-600 text-sm mb-4">
+        We retain personal data only as long as necessary to fulfill the
+        purposes outlined in this policy or as required by applicable law. You
+        may have certain rights regarding your personal data, including:
+    </p>
+    <ul
+        class="list-disc list-outside ml-6 space-y-2 text-gray-600 text-sm mb-4"
+    >
+        {userRights.map((right) => <li>{right}</li>)}
+    </ul>
+    <p class="text-gray-600 text-sm mb-8">
+        To exercise these rights, please contact us using the information
+        provided below.
+    </p>
+
+    <!-- 9. Modifications -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        9. Policy Modifications
+    </h2>
+    <p class="text-gray-600 text-sm mb-8">
+        We reserve the right to modify this Privacy Policy periodically.
+        Material changes will be communicated through prominent website notices
+        or direct email notification. The "Effective Date" at the top of this
+        policy indicates the most recent revision. We encourage regular review
+        of this policy to stay informed of our privacy practices.
+    </p>
+
+    <!-- 10. Contact -->
+    <h2 class="text-xl font-bold text-brand-dark mb-4">
+        10. Contact Information
+    </h2>
+    <p class="text-gray-600 text-sm mb-2">
+        For questions, concerns, or requests regarding this Privacy Policy or
+        our data practices, please contact us:
+    </p>
+    <p class="text-gray-600 text-sm">
+        <strong>Email:</strong> info@flightnest.co.uk
+    </p>
+    <p class="text-gray-600 text-sm">
+        <strong>Website:</strong> https://flightnest.co.uk
+    </p>
+    <p class="text-gray-600 text-sm mt-4 italic">
+        This Privacy Policy represents our commitment to protecting your
+        personal information and maintaining transparency in our data practices.
+    </p>
+</section>

@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import icoBanner from "../assets/images/ico_banner.png";
+import RefundPolicyContent from "../components/RefundPolicy.astro";
+import PrivacyPolicy from "../components/PrivacyPolicy.astro";
+---
+
+<Layout pageName="Refund Policy">
+    <!-- ICO Certification Header -->
+    <section class="bg-white border-b border-gray-100">
+        <div class="container mx-auto px-6 py-8">
+            <div
+                class="flex flex-col md:flex-row items-center justify-center gap-8"
+            >
+                <Image
+                    src={icoBanner}
+                    alt="Information Commissioner's Office Certification"
+                    class="max-w-full md:max-w-xl h-auto object-contain"
+                />
+            </div>
+            <div class="text-center mt-6">
+                <p class="text-gray-500 text-sm">
+                    Flight Nest is certified by the Information Commissioner's
+                    Office (ICO).
+                </p>
+                <div class="mt-4 text-xs text-gray-400 space-y-1">
+                    <p class="text-gray-500 text-sm">
+                        <strong>Registration reference:</strong> ZC071597
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        <strong>Date registered:</strong> 23 December 2025
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        <strong>Registration expires:</strong> 22 December 2026
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        <strong>Website:</strong>
+                        <a
+                            href="https://ico.org.uk"
+                            target="_blank"
+                            class="text-blue-500 hover:text-brand-blue transition-colors"
+                            >ico.org.uk</a
+                        >
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policies Content -->
+    <div class="container mx-auto px-6 py-12 max-w-4xl">
+        <RefundPolicyContent />
+        <PrivacyPolicy />
+    </div>
+</Layout>

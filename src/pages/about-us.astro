@@ -1,0 +1,126 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import flightNestImage from "../assets/images/flightnest.jpg";
+
+const features = [
+    "Unbeatable deals on flights, holiday packages, and visa consultations.",
+    "Personalized travel plans tailored to your European adventure.",
+    "Dedicated support for a smooth and memorable journey.",
+];
+
+const stats = [
+    { value: "3+", label: "Year\nExperience" },
+    { value: "150+", label: "Destination\nCollaboration" },
+    { value: "700+", label: "Happy\nCustomers" },
+    { value: "4.8+", label: "Star Ratings" },
+    { value: "3+", label: "Offices" },
+    { value: "50+", label: "Staff Members" },
+];
+---
+
+<Layout pageName="About Us">
+    <!-- Header -->
+    <section
+        class="bg-white py-12 md:py-20 text-center border-b border-gray-100"
+    >
+        <h1 class="text-3xl md:text-5xl font-extrabold text-brand-dark mb-4">
+            About Flight Nest
+        </h1>
+        <p class="text-gray-500 max-w-xl mx-auto px-6 text-lg">
+            Your Gateway to Seamless Travel Experiences
+        </p>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-16 bg-white">
+        <div
+            class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        >
+            <div>
+                <h2 class="text-3xl font-bold text-brand-dark mb-6">
+                    Who We Are
+                </h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    <strong>Flight Nest</strong> is a premier travel agency based
+                    in the United Kingdom, dedicated to making your global exploration
+                    effortless and memorable. We understand that travel is not just
+                    about reaching a destination; it's about the journey and the experiences
+                    that shape it.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    We specialize in providing comprehensive <strong
+                        >visa consultancy services</strong
+                    >, navigating the complexities of documentation so you don't
+                    have to. Whether you are planning a European getaway, an
+                    Asian adventure, or a trip to the Americas, our expert team
+                    ensures your paperwork is immaculate.
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    Beyond visas, we offer tailored <strong
+                        >flight and hotel booking</strong
+                    > solutions and curate <strong
+                        >custom holiday packages</strong
+                    > designed specifically around your unique needs and preferences.
+                    At Flight Nest, your dream vacation is our blueprint.
+                </p>
+            </div>
+            <div class="flex justify-center">
+                <Image
+                    src={flightNestImage}
+                    alt="Flight Nest Office"
+                    class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-lg border-4 border-gray-100"
+                />
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs Section (Dark Blue) -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <!-- Features List -->
+            <div class="space-y-6 mb-16">
+                {
+                    features.map((feature) => (
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 text-[#FCD550] text-xl">
+                                <i class="fas fa-angle-double-right" />
+                            </div>
+                            <p class="text-lg md:text-xl font-light text-[#FCD550]">
+                                {feature}
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Stats Grid -->
+            <div
+                class="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 text-center md:text-left mb-16"
+            >
+                {
+                    stats.map((stat) => (
+                        <div>
+                            <div class="text-4xl md:text-5xl font-bold text-[#FCD550] mb-2">
+                                {stat.value}
+                            </div>
+                            <div class="text-white text-lg font-medium leading-tight whitespace-pre-line">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- CTA Button -->
+            <div class="text-center md:text-left">
+                <a
+                    href="contact.html"
+                    class="inline-block bg-[#FCD550] text-black text-lg font-bold px-10 py-4 rounded-full shadow-lg hover:bg-yellow-400 transition-colors transform hover:-translate-y-1"
+                >
+                    Plan Your Trip Now
+                </a>
+            </div>
+        </div>
+    </section>
+</Layout>

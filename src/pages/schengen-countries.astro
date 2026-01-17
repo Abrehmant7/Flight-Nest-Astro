@@ -1,0 +1,195 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const countries = [
+   {
+      name: "Austria",
+      flag: "https://flagcdn.com/w40/at.png",
+   },
+   {
+      name: "Belgium",
+      flag: "https://flagcdn.com/w40/be.png",
+   },
+   {
+      name: "Bulgaria",
+      flag: "https://flagcdn.com/w40/bg.png",
+   },
+   {
+      name: "Croatia",
+      flag: "https://flagcdn.com/w40/hr.png",
+   },
+   {
+      name: "Cyprus",
+      flag: "https://flagcdn.com/w40/cy.png",
+   },
+   {
+      name: "Czech Republic",
+      flag: "https://flagcdn.com/w40/cz.png",
+   },
+   {
+      name: "Denmark",
+      flag: "https://flagcdn.com/w40/dk.png",
+   },
+   {
+      name: "Estonia",
+      flag: "https://flagcdn.com/w40/ee.png",
+   },
+   {
+      name: "Finland",
+      flag: "https://flagcdn.com/w40/fi.png",
+   },
+   {
+      name: "France",
+      flag: "https://flagcdn.com/w40/fr.png",
+   },
+   {
+      name: "Germany",
+      flag: "https://flagcdn.com/w40/de.png",
+   },
+   {
+      name: "Greece",
+      flag: "https://flagcdn.com/w40/gr.png",
+   },
+   {
+      name: "Hungary",
+      flag: "https://flagcdn.com/w40/hu.png",
+   },
+   {
+      name: "Iceland",
+      flag: "https://flagcdn.com/w40/is.png",
+   },
+   {
+      name: "Italy",
+      flag: "https://flagcdn.com/w40/it.png",
+   },
+   {
+      name: "Latvia",
+      flag: "https://flagcdn.com/w40/lv.png",
+   },
+   {
+      name: "Liechtenstein",
+      flag: "https://flagcdn.com/w40/li.png",
+   },
+   {
+      name: "Lithuania",
+      flag: "https://flagcdn.com/w40/lt.png",
+   },
+   {
+      name: "Luxembourg",
+      flag: "https://flagcdn.com/w40/lu.png",
+   },
+   {
+      name: "Malta",
+      flag: "https://flagcdn.com/w40/mt.png",
+   },
+   {
+      name: "Netherlands",
+      flag: "https://flagcdn.com/w40/nl.png",
+   },
+   {
+      name: "Norway",
+      flag: "https://flagcdn.com/w40/no.png",
+   },
+   {
+      name: "Poland",
+      flag: "https://flagcdn.com/w40/pl.png",
+   },
+   {
+      name: "Portugal",
+      flag: "https://flagcdn.com/w40/pt.png",
+   },
+   {
+      name: "Romania",
+      flag: "https://flagcdn.com/w40/ro.png",
+   },
+   {
+      name: "Slovakia",
+      flag: "https://flagcdn.com/w40/sk.png",
+   },
+   {
+      name: "Slovenia",
+      flag: "https://flagcdn.com/w40/si.png",
+   },
+   {
+      name: "Spain",
+      flag: "https://flagcdn.com/w40/es.png",
+   },
+   {
+      name: "Sweden",
+      flag: "https://flagcdn.com/w40/se.png",
+   },
+   {
+      name: "Switzerland",
+      flag: "https://flagcdn.com/w40/ch.png",
+   },
+];
+
+const trendingVisas = [
+   "Portugal",
+   "USA",
+   "Canada",
+   "France",
+   "Estonia",
+   "Denmark",
+   "Switzerland",
+   "Netherlands",
+   "Greece",
+   "Sweden",
+];
+---
+
+<Layout pageName="Schengen Countries">
+   <!-- Header -->
+   <section class="bg-white py-12 md:py-20 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold text-brand-dark mb-4">
+         Schengen Countries
+      </h1>
+      <p class="text-gray-500 max-w-xl mx-auto px-6 text-lg">
+         Click any country to see details
+      </p>
+   </section>
+
+   <!-- Countries Grid -->
+   <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-6">
+         <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 max-w-6xl mx-auto"
+         >
+            {
+               countries.map((country) => (
+                  <a
+                     href={`/${trendingVisas.includes(country.name) ? "visa/" + country.name.toLowerCase() : "contact.html"}`}
+                     class="block flex items-center justify-between border-b border-gray-200 pb-4 group cursor-pointer hover:border-gray-300 transition-colors"
+                  >
+                     <div class="flex items-center gap-4">
+                        <img
+                           src={country.flag}
+                           alt={country.name}
+                           class="w-8 h-5 object-cover rounded-sm shadow-sm"
+                        />
+                        <h3 class="font-bold text-lg text-brand-dark group-hover:text-brand-blue transition-colors">
+                           {country.name}
+                        </h3>
+                     </div>
+                     <div class="text-gray-400 group-hover:text-brand-blue transition-colors">
+                        <svg
+                           class="w-5 h-5"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"
+                           />
+                        </svg>
+                     </div>
+                  </a>
+               ))
+            }
+         </div>
+      </div>
+   </section>
+</Layout>

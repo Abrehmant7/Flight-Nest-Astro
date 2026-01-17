@@ -15,11 +15,11 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
     { href: "/", label: "Home" },
-    { href: "/schengen_countries", label: "Schengen countries" },
-    { href: "/other_countries", label: "Premium countries" },
-    { href: "/about_us", label: "About us" },
-    { href: "/faq", label: "FAQs" },
-    { href: "/privacy_policy", label: "Privacy policy" },
+    { href: "/schengen-countries", label: "Schengen Countries" },
+    { href: "/premium-countries", label: "Premium countries" },
+    { href: "/about-us", label: "About Us" },
+    { href: "/FAQ", label: "FAQs" },
+    { href: "/refund-policy", label: "Refund Policy" },
 ];
 ---
 
@@ -55,7 +55,7 @@ const navLinks: NavLink[] = [
     <button
         class="hidden md:block bg-brand-blue text-white px-6 py-3 rounded-2xl hover:bg-sky-500 transition"
     >
-        <a href="contact.html" class="transition">Contact us</a>
+        <a href="/contact" class="transition">Contact us</a>
     </button>
 
     <button class="md:hidden text-gray-600 focus:outline-none">

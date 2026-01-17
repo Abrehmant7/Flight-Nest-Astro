@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const questions = [
+    {question : "Documents Needed to Apply for a Schengen Visa?", answer : "A valid passport is required, and our expert team will assist with other documents like travel itineraries, accommodation proof, financial statements, and travel insurance. We guide you through every step for a smooth visa process."},
+    {question : "What is the Processing Time for a Visa Application?", answer : "Processing times vary by country due to local regulations and requirements. We are committed to providing an efficient and seamless experience, with typical processing times ranging from several business days to several weeks, depending on the complexity and jurisdiction involved."},
+    {question : "Do you guarantee visa approval?", answer : "Although we achieve consistently high success rates, ultimate approval is contingent upon meeting specific embassy requirements. Our expert team maximizes your chances of success by providing meticulous documentation preparation and comprehensive application guidance."},
+    {question : "Can I track my visa application status?", answer : "Yes, our services include continuous application tracking with regular status updates, delivering complete visibility and confidence throughout your application journey."},
+    {question : "Data Privacy and Security with Our Schengen Visa Consultancy?", answer : "Data security and privacy are fundamental priorities in our service delivery. We utilize advanced encryption technologies that meet industry standards to protect your personal information throughout all transmission processes. Our fully GDPR-compliant infrastructure ensures responsible data management through stringent access controls and a minimal data collection policy, gathering only information essential for visa application requirements."},
+    
+]
+---
+
+
+<Layout pageName="FAQs">
+     <!-- Header -->
+  <section class="bg-brand-blue py-16 md:py-24 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Frequently Asked Questions</h1>
+      <p class="text-gray-300 max-w-xl mx-auto px-6 text-lg">Everything you need to know about our visa services and processes.</p>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 bg-white min-h-screen">
+      <div class="container mx-auto px-6 max-w-3xl">
+          
+          <div class="space-y-4">
+              
+              {questions.map((faq) => (
+                <details class="group bg-gray-50 p-6 rounded-xl border border-gray-100 cursor-pointer">
+                  <summary class="flex justify-between items-center font-bold text-lg text-brand-dark hover:text-brand-blue transition-colors">
+                      {faq.question}
+                      <span class="transform group-open:rotate-180 transition-transform duration-300 text-brand-blue">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </span>
+                  </summary>
+                  <div class="mt-4 text-gray-600 leading-relaxed">
+                      {faq.answer}
+                  </div>
+              </details>
+              ))}
+
+          </div>
+      </div>
+  </section>
+
+  <style>
+    details {
+      transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      overflow: hidden;
+    }
+    summary {
+      list-style: none;
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    </style>
+
+  <script>
+    document.querySelectorAll('details').forEach((detail) => {
+      const summary = detail.querySelector('summary');
+      
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        if (detail.hasAttribute('open')) {
+          // Closing
+          detail.style.height = `${detail.offsetHeight}px`;
+          requestAnimationFrame(() => {
+            detail.style.height = `${summary.offsetHeight}px`;
+          });
+          
+          detail.addEventListener('transitionend', function onEnd() {
+            detail.removeAttribute('open');
+            detail.style.height = null;
+            detail.removeEventListener('transitionend', onEnd);
+          }, { once: true });
+        } else {
+          // Opening
+          detail.style.height = `${summary.offsetHeight}px`;
+          detail.setAttribute('open', '');
+          requestAnimationFrame(() => {
+            detail.style.height = `${detail.scrollHeight}px`;
+          });
+          
+          detail.addEventListener('transitionend', function onEnd() {
+            detail.style.height = null;
+            detail.removeEventListener('transitionend', onEnd);
+          }, { once: true });
+        }
+      });
+    });
+  </script>
+
+</Layout>

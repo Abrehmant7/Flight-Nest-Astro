@@ -1,0 +1,260 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const countriesList = [
+    {
+        region: "North America",
+        countries: [
+            {
+                name: "Canada",
+                flag: "https://flagcdn.com/w40/ca.png",
+                link: "/visa/canada",
+            },
+            {
+                name: "USA",
+                flag: "https://flagcdn.com/w40/us.png",
+                link: "/visa/usa",
+            },
+            {
+                name: "Dominican Republic",
+                flag: "https://flagcdn.com/w40/do.png",
+                link: "/contact",
+            },
+            {
+                name: "Cuba",
+                flag: "https://flagcdn.com/w40/cu.png",
+                link: "/contact",
+            },
+            {
+                name: "Jamaica",
+                flag: "https://flagcdn.com/w40/jm.png",
+                link: "/contact",
+            },
+            {
+                name: "Bahamas",
+                flag: "https://flagcdn.com/w40/bs.png",
+                link: "/contact",
+            },
+            {
+                name: "Barbados",
+                flag: "https://flagcdn.com/w40/bb.png",
+                link: "/contact",
+            },
+        ],
+    },
+    {
+        region: "Europe",
+        countries: [
+            {
+                name: "France",
+                flag: "https://flagcdn.com/w40/fr.png",
+                link: "/visa/france",
+            },
+            {
+                name: "Germany",
+                flag: "https://flagcdn.com/w40/de.png",
+                link: "/contact",
+            },
+            {
+                name: "Netherlands",
+                flag: "https://flagcdn.com/w40/nl.png",
+                link: "/visa/netherlands",
+            },
+            {
+                name: "Switzerland",
+                flag: "https://flagcdn.com/w40/ch.png",
+                link: "/visa/switzerland",
+            },
+            {
+                name: "Sweden",
+                flag: "https://flagcdn.com/w40/se.png",
+                link: "/visa/sweden",
+            },
+            {
+                name: "Denmark",
+                flag: "https://flagcdn.com/w40/dk.png",
+                link: "/visa/denmark",
+            },
+            {
+                name: "Estonia",
+                flag: "https://flagcdn.com/w40/ee.png",
+                link: "/visa/estonia",
+            },
+            {
+                name: "Portugal",
+                flag: "https://flagcdn.com/w40/pt.png",
+                link: "/visa/portugal",
+            },
+            {
+                name: "Greece",
+                flag: "https://flagcdn.com/w40/gr.png",
+                link: "/visa/greece",
+            },
+            {
+                name: "Italy",
+                flag: "https://flagcdn.com/w40/it.png",
+                link: "/contact",
+            },
+            {
+                name: "Spain",
+                flag: "https://flagcdn.com/w40/es.png",
+                link: "/contact",
+            },
+            {
+                name: "United Kingdom",
+                flag: "https://flagcdn.com/w40/gb.png",
+                link: "/contact",
+            },
+        ],
+    },
+    {
+        region: "Asia",
+        countries: [
+            {
+                name: "China",
+                flag: "https://flagcdn.com/w40/cn.png",
+                link: "/contact",
+            },
+            {
+                name: "Japan",
+                flag: "https://flagcdn.com/w40/jp.png",
+                link: "/contact",
+            },
+            {
+                name: "Thailand",
+                flag: "https://flagcdn.com/w40/th.png",
+                link: "/contact",
+            },
+            {
+                name: "Singapore",
+                flag: "https://flagcdn.com/w40/sg.png",
+                link: "/contact",
+            },
+            {
+                name: "Malaysia",
+                flag: "https://flagcdn.com/w40/my.png",
+                link: "/contact",
+            },
+        ],
+    },
+    {
+        region: "South America",
+        countries: [
+            {
+                name: "Brazil",
+                flag: "https://flagcdn.com/w40/br.png",
+                link: "/contact",
+            },
+            {
+                name: "Argentina",
+                flag: "https://flagcdn.com/w40/ar.png",
+                link: "/contact",
+            },
+            {
+                name: "Peru",
+                flag: "https://flagcdn.com/w40/pe.png",
+                link: "/contact",
+            },
+            {
+                name: "Chile",
+                flag: "https://flagcdn.com/w40/cl.png",
+                link: "/contact",
+            },
+            {
+                name: "Colombia",
+                flag: "https://flagcdn.com/w40/co.png",
+                link: "/contact",
+            },
+        ],
+    },
+    {
+        region: "Africa",
+        countries: [
+            {
+                name: "Egypt",
+                flag: "https://flagcdn.com/w40/eg.png",
+                link: "/contact",
+            },
+            {
+                name: "Morocco",
+                flag: "https://flagcdn.com/w40/ma.png",
+                link: "/contact",
+            },
+            {
+                name: "South Africa",
+                flag: "https://flagcdn.com/w40/za.png",
+                link: "/contact",
+            },
+            {
+                name: "Tunisia",
+                flag: "https://flagcdn.com/w40/tn.png",
+                link: "/contact",
+            },
+            {
+                name: "Kenya",
+                flag: "https://flagcdn.com/w40/ke.png",
+                link: "/contact",
+            },
+        ],
+    },
+    {
+        region: "Oceania",
+        countries: [
+            {
+                name: "Australia",
+                flag: "https://flagcdn.com/w40/au.png",
+                link: "/contact",
+            },
+            {
+                name: "New Zealand",
+                flag: "https://flagcdn.com/w40/nz.png",
+                link: "/contact",
+            },
+        ],
+    },
+];
+---
+
+<Layout pageName="Premium Countries">
+    <!-- Header -->
+    <section
+        class="bg-white py-12 md:py-20 text-center border-b border-gray-100"
+    >
+        <h1 class="text-3xl md:text-5xl font-extrabold text-brand-dark mb-4">
+            Other Countries
+        </h1>
+        <p class="text-gray-500 max-w-xl mx-auto px-6 text-lg">
+            Explore visa requirements for countries worldwide
+        </p>
+    </section>
+
+    <!-- Regions -->
+    <div class="bg-gray-50 py-12 space-y-16">
+        {
+            countriesList.map((region) => (
+                <div class="container mx-auto px-4">
+                    <h2 class="text-2xl font-bold text-brand-dark mb-6">
+                        {region.region}
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {region.countries.map((country) => (
+                            <a
+                                href={country.link}
+                                class="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow flex items-center gap-4"
+                            >
+                                <img
+                                    src={country.flag}
+                                    alt={country.name}
+                                    class="w-10 h-7 rounded-md shadow-sm"
+                                />
+                                <span class="text-lg font-medium text-gray-700">
+                                    {country.name}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</Layout>
