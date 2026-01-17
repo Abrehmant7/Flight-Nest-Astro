@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import hero1 from '../assets/hero-1.png';
-import hero2 from '../assets/hero-2.png';
-import hero3 from '../assets/hero-3.png';
+import hero1 from '../assets/images/hero-1.png';
+import hero2 from '../assets/images/hero-2.png';
+import hero3 from '../assets/images/hero-3.png';
 
 const slides = [
   {
@@ -74,22 +74,34 @@ const slides = [
 
   let currentIndex = 0;
   let isAnimating = false;
-  const slides = document.querySelectorAll('.slide');
-  const totalSlides = slides.length;
-  const duration = 1.2; // Slightly faster for snappier feel
-  const ease = "power2.inOut"; // experimental: trying slightly different ease to reduce 'heavy' feel? Or maybe keep expo.
+  let slides: HTMLElement[] = [];
+  let totalSlides = 0;
+  let ctx;
 
-  // Initialize positions
+  // Configuration
+  const DURATION = 1.2;
+  const EASE = "power3.inOut";
+
   function init() {
-    gsap.config({ force3D: true }); // Ensure hardware acceleration
+    const container = document.getElementById('hero-container');
+    if (!container) return;
     
-    // Set all slides to right, except first one which is center
-    gsap.set(slides, { xPercent: 100, zIndex: 0 });
-    gsap.set(slides[0], { xPercent: 0, zIndex: 10 });
+    slides = Array.from(container.querySelectorAll('.slide')) as HTMLElement[];
+    totalSlides = slides.length;
     
-    // Initial Text state for active slide (visible)
-    const activeText = getSlideElements(slides[0]);
-    animateTextIn(activeText, 0);
+    // Create a GSAP context for easy cleanup (good practice)
+    ctx = gsap.context(() => {
+        // Initial setup
+        gsap.set(slides, {
+            xPercent: (i) => (i === 0 ? 0 : 100),
+            zIndex: (i) => (i === 0 ? 10 : 0),
+            autoAlpha: 1,
+        });
+        
+        // Initial Text Animation
+        const activeText = getSlideElements(slides[0]);
+        animateTextIn(activeText, 0);
+    }, container);
   }
 
   function getSlideElements(slide) {
@@ -101,82 +113,90 @@ const slides = [
   }
 
   function animateTextIn(elements, delay = 0) {
-    gsap.fromTo([elements.subtitle, elements.title, elements.desc], 
-      { y: 50, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 1, 
-        stagger: 0.1, 
-        ease: "power4.out",
-        delay: delay 
-      }
-    );
-  }
+  if (!elements.title) return;
 
-  function animateTextOut(elements) {
-    gsap.to([elements.subtitle, elements.title, elements.desc], {
-      y: -50,
-      opacity: 0,
-      duration: 0.6, // Faster exit
-      stagger: 0.05,
-      ease: "power2.in"
+  gsap.killTweensOf([elements.subtitle, elements.title, elements.desc]);
+
+  gsap.fromTo(
+    [elements.subtitle, elements.title, elements.desc],
+    { y: 50, autoAlpha: 0 },
+    {
+      y: 0,
+      autoAlpha: 1,
+      duration: 1,
+      stagger: 0.1,
+      ease: "power4.out",
+      delay,
+    }
+  );
+}
+
+function animateTextOut(elements) {
+  if (!elements.title) return;
+
+  gsap.killTweensOf([elements.subtitle, elements.title, elements.desc]);
+
+  gsap.to([elements.subtitle, elements.title, elements.desc], {
+    y: -50,
+    autoAlpha: 0,
+    duration: 0.5,
+    stagger: 0.05,
+    ease: "power2.in",
+  });
+}
+
+
+function nextSlide() {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  const nextIndex = (currentIndex + 1) % totalSlides;
+  const currentSlide = slides[currentIndex];
+  const nextSlideEl = slides[nextIndex];
+
+  const currentText = getSlideElements(currentSlide);
+  const nextText = getSlideElements(nextSlideEl);
+
+  // Prepare next slide BEFORE animation starts
+  gsap.set(nextSlideEl, {
+    xPercent: 100,
+    zIndex: 20,
+  });
+
+  animateTextOut(currentText);
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+  slides.forEach((slide, i) => {
+    gsap.set(slide, {
+      zIndex: i === nextIndex ? 10 : 0,
+      xPercent: i === nextIndex ? 0 : 100,
     });
-  }
+  });
 
-  function nextSlide() {
-    if (isAnimating) return;
-    isAnimating = true;
+  currentIndex = nextIndex;
+  isAnimating = false;
+}
 
-    const nextIndex = (currentIndex + 1) % totalSlides;
-    const currentSlide = slides[currentIndex];
-    const nextSlideEl = slides[nextIndex];
-    
-    const currentText = getSlideElements(currentSlide);
-    const nextText = getSlideElements(nextSlideEl);
+  });
 
-    // Promote elements to layers to prevent repaints
-    gsap.set([currentSlide, nextSlideEl], { willChange: "transform" });
-    gsap.set([currentText.title, currentText.subtitle, currentText.desc, nextText.title, nextText.subtitle, nextText.desc], { willChange: "transform, opacity" });
+  tl.to(currentSlide, {
+    xPercent: -25,
+    duration: DURATION,
+    ease: EASE,
+  }, 0)
+   .to(nextSlideEl, {
+    xPercent: 0,
+    duration: DURATION,
+    ease: EASE,
+   }, 0)
+   .add(() => animateTextIn(nextText), "-=0.4");
+}
 
-    const tl = gsap.timeline({
-      defaults: { ease: "power2.inOut" }, // Smooth standard easing
-      onComplete: () => {
-        isAnimating = false;
-        currentIndex = nextIndex;
-        // Reset old slide
-        gsap.set(currentSlide, { xPercent: 100, zIndex: 0 }); 
-        // Clear will-change to save memory
-        gsap.set([currentSlide, nextSlideEl], { willChange: "auto" });
-        gsap.set([currentText.title, currentText.subtitle, currentText.desc, nextText.title, nextText.subtitle, nextText.desc], { willChange: "auto" });
-      }
-    });
 
-    // 1. Prepare next slide (Ensure it's at starting position without forcing reflow)
-    gsap.set(nextSlideEl, { zIndex: 20 });
-    
-    // 2. Animate Text Out First
-    animateTextOut(currentText);
-
-    // 3. Main Slide Transition
-    tl.fromTo(nextSlideEl, 
-        { xPercent: 100 },
-        { xPercent: 0, duration: 1.4, ease: "expo.inOut" },
-        0
-    )
-    .to(currentSlide, 
-        { xPercent: -25, duration: 1.4, ease: "expo.inOut" },
-        0
-    );
-
-    // 4. Animate New Text In (coming in late for drama)
-    tl.add(() => {
-        animateTextIn(nextText, 0); 
-    }, "-=0.6");
-  }
-
-  // Init on load
-  init();
+  // Initialize
+  // Wait for DOM
+  document.addEventListener('DOMContentLoaded', init); // Ensure DOM is ready, though usually fine in Astro script after body
 
   // Event Listeners
   const container = document.getElementById('hero-container');
@@ -188,12 +208,17 @@ const slides = [
     }
   });
 
-  // Touch Support
+  // Basic Touch Support
   let touchStartX = 0;
-  container?.addEventListener('touchstart', e => {
+  container?.addEventListener('touchstart', (e) => {
      touchStartX = e.changedTouches[0].screenX;
-  });
-  container?.addEventListener('touchend', e => {
+  }, { passive: true });
+  
+  container?.addEventListener('touchend', (e) => {
     if (touchStartX - e.changedTouches[0].screenX > 50) nextSlide();
-  });
+  }, { passive: true });
+
+  window.addEventListener('beforeunload', () => {
+  ctx?.revert();
+});
 </script>
