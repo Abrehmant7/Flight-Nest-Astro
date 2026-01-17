@@ -1,0 +1,174 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const posts = await Astro.glob("../../posts/*.md");
+    return posts.map((post) => ({
+        params: { slug: post.frontmatter.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = post;
+---
+
+<Layout pageName={post.frontmatter.title}>
+    <!-- Hero Section -->
+    <div
+        class="relative h-[60vh] min-h-[400px] w-full bg-gray-900 overflow-hidden"
+    >
+        <img
+            src={post.frontmatter.image}
+            alt={post.frontmatter.title}
+            class="absolute inset-0 w-full h-full object-cover opacity-60"
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"
+        >
+        </div>
+
+        <!-- Text Overlay Wrapper -->
+        <div class="absolute inset-0 flex items-end">
+            <div class="container mx-auto px-6 py-16">
+                <div class="max-w-4xl">
+                    <div
+                        class="flex flex-wrap items-center gap-4 text-sm font-bold uppercase tracking-wider text-brand-blue mb-4"
+                    >
+                        <span
+                            class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white"
+                            >{post.frontmatter.tags?.[0]}</span
+                        >
+                        <span class="text-gray-300"
+                            >{post.frontmatter.date}</span
+                        >
+                    </div>
+                    <h1
+                        class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 drop-shadow-sm"
+                    >
+                        {post.frontmatter.title}
+                    </h1>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-bold text-lg"
+                        >
+                            {post.frontmatter.author.charAt(0)}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-white">
+                                Written by
+                            </p>
+                            <p class="text-sm text-gray-300">
+                                {post.frontmatter.author}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <article class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="prose prose-lg prose-blue mx-auto text-gray-700">
+                <!-- Custom styling since we might not have the typography plugin -->
+                <style is:inline>
+                    .prose h1 {
+                        font-size: 2.25rem;
+                        line-height: 2.5rem;
+                        font-weight: 700;
+                        color: #111827;
+                        margin-bottom: 1.5rem;
+                        margin-top: 2rem;
+                    }
+                    .prose h2 {
+                        font-size: 1.875rem;
+                        line-height: 2.25rem;
+                        font-weight: 700;
+                        color: #1f2937;
+                        margin-bottom: 1rem;
+                        margin-top: 3rem;
+                    }
+                    .prose h3 {
+                        font-size: 1.5rem;
+                        line-height: 2rem;
+                        font-weight: 700;
+                        color: #1f2937;
+                        margin-bottom: 0.75rem;
+                        margin-top: 2rem;
+                    }
+                    .prose p {
+                        margin-bottom: 1.5rem;
+                        line-height: 1.625;
+                        font-size: 1.125rem;
+                    }
+                    .prose ul {
+                        list-style-type: disc;
+                        list-style-position: outside;
+                        margin-bottom: 1.5rem;
+                        padding-left: 1.5rem;
+                    }
+                    .prose ul li {
+                        margin-bottom: 0.5rem;
+                    }
+                    .prose ol {
+                        list-style-type: decimal;
+                        list-style-position: outside;
+                        margin-bottom: 1.5rem;
+                        padding-left: 1.5rem;
+                    }
+                    .prose ol li {
+                        margin-bottom: 0.5rem;
+                    }
+                    .prose strong {
+                        font-weight: 700;
+                        color: #111827;
+                    }
+                    .prose a {
+                        color: #2563eb;
+                        text-decoration: underline;
+                    }
+                    .prose a:hover {
+                        color: #1d4ed8;
+                    }
+                    .prose blockquote {
+                        border-left-width: 4px;
+                        border-left-color: #0395d3;
+                        padding-left: 1rem;
+                        font-style: italic;
+                        color: #4b5563;
+                        margin-top: 2rem;
+                        margin-bottom: 2rem;
+                    }
+                </style>
+                <Content />
+            </div>
+
+            <!-- Share/Tags Footer -->
+            <div class="mt-16 pt-8 border-t border-gray-100">
+                <div class="flex flex-wrap gap-2">
+                    {
+                        post.frontmatter.tags.map((tag: any) => (
+                            <span class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                                #{tag}
+                            </span>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Navigation -->
+    <div class="bg-gray-50 py-12 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center">
+            <a
+                href="/blog"
+                class="inline-flex items-center gap-2 text-brand-dark font-bold hover:text-brand-blue transition-colors"
+            >
+                &larr; Back to all articles
+            </a>
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import hero1 from '../assets/hero-1.png';
+import hero2 from '../assets/hero-2.png';
+import hero3 from '../assets/hero-3.png';
+
+const slides = [
+  {
+    image: hero1,
+    title: "THE LONDON EYE",
+    location: "LONDON, UK",
+    subtitle: "Experience the city from new heights"
+  },
+  {
+    image: hero2,
+    title: "PARISIAN DREAMS",
+    location: "PARIS, FRANCE",
+    subtitle: "Wander through the streets of romance"
+  },
+  {
+    image: hero3,
+    title: "FLIGHT NEST",
+    location: "GLOBAL TRAVEL",
+    subtitle: "Your journey begins here"
+  }
+];
+---
+
+<div id="hero-container" class="relative w-full h-screen overflow-hidden bg-black cursor-pointer group select-none">
+  {slides.map((slide, index) => (
+    <div 
+      class="slide absolute inset-0 w-full h-full will-change-transform"
+      data-index={index}
+    >
+      <div class="absolute inset-0 bg-black/30 z-10 pointer-events-none"></div>
+      <Image 
+        src={slide.image} 
+        alt={slide.title}
+        class="w-full h-full object-cover"
+        width={1920}
+        height={1080}
+        loading="eager"
+      />
+      
+      <div class="absolute inset-x-0 bottom-24 z-20 px-8 md:px-16 flex flex-col items-start text-white pointer-events-none overflow-hidden">
+        <span class="slide-subtitle text-xs md:text-sm font-bold tracking-[0.2em] mb-2 block uppercase">
+          {slide.location}
+        </span>
+        <h1 class="slide-title text-5xl md:text-8xl font-black tracking-tighter mb-4 block">
+          {slide.title}
+        </h1>
+        <p class="slide-desc text-sm md:text-base font-light tracking-wide max-w-md block">
+          {slide.subtitle}
+        </p>
+      </div>
+
+      <!-- Navigation Indicator -->
+      <div class="absolute right-8 bottom-8 z-30 flex gap-2 pointer-events-none">
+         <span class="text-white/80 font-mono text-xs">{(index + 1).toString().padStart(2, '0')} / {slides.length.toString().padStart(2, '0')}</span>
+      </div>
+    </div>
+  ))}
+
+  <!-- Custom Cursor / Hint -->
+  <div class="absolute right-8 top-1/2 -translate-y-1/2 z-40 bg-white/10 backdrop-blur-md p-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none hidden md:block">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+      </svg>
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  let currentIndex = 0;
+  let isAnimating = false;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const duration = 1.2; // Slightly faster for snappier feel
+  const ease = "power2.inOut"; // experimental: trying slightly different ease to reduce 'heavy' feel? Or maybe keep expo.
+
+  // Initialize positions
+  function init() {
+    gsap.config({ force3D: true }); // Ensure hardware acceleration
+    
+    // Set all slides to right, except first one which is center
+    gsap.set(slides, { xPercent: 100, zIndex: 0 });
+    gsap.set(slides[0], { xPercent: 0, zIndex: 10 });
+    
+    // Initial Text state for active slide (visible)
+    const activeText = getSlideElements(slides[0]);
+    animateTextIn(activeText, 0);
+  }
+
+  function getSlideElements(slide) {
+    return {
+      subtitle: slide.querySelector('.slide-subtitle'),
+      title: slide.querySelector('.slide-title'),
+      desc: slide.querySelector('.slide-desc')
+    };
+  }
+
+  function animateTextIn(elements, delay = 0) {
+    gsap.fromTo([elements.subtitle, elements.title, elements.desc], 
+      { y: 50, opacity: 0 },
+      { 
+        y: 0, 
+        opacity: 1, 
+        duration: 1, 
+        stagger: 0.1, 
+        ease: "power4.out",
+        delay: delay 
+      }
+    );
+  }
+
+  function animateTextOut(elements) {
+    gsap.to([elements.subtitle, elements.title, elements.desc], {
+      y: -50,
+      opacity: 0,
+      duration: 0.6, // Faster exit
+      stagger: 0.05,
+      ease: "power2.in"
+    });
+  }
+
+  function nextSlide() {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const nextIndex = (currentIndex + 1) % totalSlides;
+    const currentSlide = slides[currentIndex];
+    const nextSlideEl = slides[nextIndex];
+    
+    const currentText = getSlideElements(currentSlide);
+    const nextText = getSlideElements(nextSlideEl);
+
+    // Promote elements to layers to prevent repaints
+    gsap.set([currentSlide, nextSlideEl], { willChange: "transform" });
+    gsap.set([currentText.title, currentText.subtitle, currentText.desc, nextText.title, nextText.subtitle, nextText.desc], { willChange: "transform, opacity" });
+
+    const tl = gsap.timeline({
+      defaults: { ease: "power2.inOut" }, // Smooth standard easing
+      onComplete: () => {
+        isAnimating = false;
+        currentIndex = nextIndex;
+        // Reset old slide
+        gsap.set(currentSlide, { xPercent: 100, zIndex: 0 }); 
+        // Clear will-change to save memory
+        gsap.set([currentSlide, nextSlideEl], { willChange: "auto" });
+        gsap.set([currentText.title, currentText.subtitle, currentText.desc, nextText.title, nextText.subtitle, nextText.desc], { willChange: "auto" });
+      }
+    });
+
+    // 1. Prepare next slide (Ensure it's at starting position without forcing reflow)
+    gsap.set(nextSlideEl, { zIndex: 20 });
+    
+    // 2. Animate Text Out First
+    animateTextOut(currentText);
+
+    // 3. Main Slide Transition
+    tl.fromTo(nextSlideEl, 
+        { xPercent: 100 },
+        { xPercent: 0, duration: 1.4, ease: "expo.inOut" },
+        0
+    )
+    .to(currentSlide, 
+        { xPercent: -25, duration: 1.4, ease: "expo.inOut" },
+        0
+    );
+
+    // 4. Animate New Text In (coming in late for drama)
+    tl.add(() => {
+        animateTextIn(nextText, 0); 
+    }, "-=0.6");
+  }
+
+  // Init on load
+  init();
+
+  // Event Listeners
+  const container = document.getElementById('hero-container');
+  container?.addEventListener('click', nextSlide);
+  
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      nextSlide();
+    }
+  });
+
+  // Touch Support
+  let touchStartX = 0;
+  container?.addEventListener('touchstart', e => {
+     touchStartX = e.changedTouches[0].screenX;
+  });
+  container?.addEventListener('touchend', e => {
+    if (touchStartX - e.changedTouches[0].screenX > 50) nextSlide();
+  });
+</script>

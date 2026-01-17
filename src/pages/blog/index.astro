@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+// Fetch all markdown posts
+const posts = await Astro.glob("../../posts/*.md");
+---
+
+<Layout pageName="Blog">
+  <!-- Header -->
+  <section class="bg-brand-dark text-white py-20 text-center">
+    <div class="container mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
+        Flight Nest Blog
+      </h1>
+      <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+        Latest travel tips, destination guides, and visa advice from our experts.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          posts.map((post) => (
+            <article class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+              <a href={`/blog/${post.frontmatter.slug}`} class="block h-48 overflow-hidden group">
+                 <!-- 
+                    Note: For images in markdown frontmatter, we might need a workaround if they're public paths 
+                    vs imported images. Assuming public paths for now as set in previous step.
+                 -->
+                <img
+                  src={post.frontmatter.image}
+                  alt={post.frontmatter.title}
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+              </a>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center gap-4 text-xs text-brand-blue font-bold mb-3 uppercase tracking-wider">
+                  <span>{post.frontmatter.tags?.[0] || "Travel"}</span>
+                  <span class="text-gray-300">|</span>
+                  <span class="text-gray-500 font-normal normal-case">{post.frontmatter.date}</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-brand-blue transition-colors">
+                  <a href={`/blog/${post.frontmatter.slug}`}>
+                    {post.frontmatter.title}
+                  </a>
+                </h3>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {post.frontmatter.excerpt}
+                </p>
+                <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <span class="text-xs text-gray-500 font-medium">By {post.frontmatter.author}</span>
+                     <a href={`/blog/${post.frontmatter.slug}`} class="text-brand-blue text-sm font-bold hover:underline">
+                        Read Story &rarr;
+                     </a>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
